@@ -1,8 +1,34 @@
 #!/usr/bin/env ruby
+require 'rack'
+
 begin
   load File.expand_path("../spring", __FILE__)
 rescue LoadError
 end
+
+# Thin SSL workaround
+module Rack
+  module Handler
+    class Thin
+      def self.run(app, options={})
+        app = Rack::Chunked.new(Rack::ContentLength.new(app))
+        server = ::Thin::Server.new('0.0.0.0',
+                                    443,
+                                    app)
+        server.ssl = true
+        server.ssl_options = {
+            :private_key_file => '/home/arollick/apns-proxy/config/uapos.info.key',
+            :cert_chain_file => '/home/arollick/apns-proxy/config/uapos.info.crt',
+            :ca_file => '/home/arollick/apns-proxy/config/ca.crt'
+        }
+        yield server if block_given?
+        server.start
+      end
+    end
+  end
+end
+# Workaround end
+
 APP_PATH = File.expand_path('../../config/application',  __FILE__)
 require_relative '../config/boot'
 require 'rails/commands'

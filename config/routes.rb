@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       post :reattempt, :on => :member
     end
   end
-  resources :devices, :only => [:show]
+  resources :devices
   resources :users
   
   get 'login' => 'sessions#new'
