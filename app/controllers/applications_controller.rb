@@ -4,12 +4,14 @@ class ApplicationsController < ApplicationController
   
   def index
     @applications = Application.asc
+
   end
   
   def show
     @environments = @application.environments.asc
     @auth_keys = @application.auth_keys.asc.includes(:environment)
-    @devices = @application.devices.asc
+    @devices =  Device.asc.page(params[:page]).per(2)
+    #@devices.asc.page(params[:page]).per(2)
 
   end
   
