@@ -12,7 +12,6 @@ class ApplicationsController < ApplicationController
     @auth_keys = @application.auth_keys.asc.includes(:environment)
     @devices =   @application.devices.asc.page(params[:page]).per(2)
 
->>>>>>> 84a65b709942ecb7b6cd880770ded5f0824f4deb
   end
   
   def new
