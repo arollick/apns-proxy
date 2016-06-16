@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :applications do
     resources :environments
     resources :auth_keys
+    resources :devices
     resources :notifications do
       post :reattempt, :on => :member
     end

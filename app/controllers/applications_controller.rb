@@ -9,8 +9,7 @@ class ApplicationsController < ApplicationController
   def show
     @environments = @application.environments.asc
     @auth_keys = @application.auth_keys.asc.includes(:environment)
-    @devices = @application.devices.asc
-
+    @devices =   @devices = @application.devices.asc.page(params[:page]).per(2)
   end
   
   def new

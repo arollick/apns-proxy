@@ -2,6 +2,7 @@
 %h2= @application.name
 
 %ul.nav
+  %li= link_to "Devices", [@application, :devices]
   %li= link_to "Notifications", [@application, :notifications]
   %li= link_to "Edit application", [:edit, @application]
   %li= link_to "Delete application", @application, :method => :delete, :data => {:confirm => "Are you sure you wish to remove this application?"}
@@ -45,10 +46,10 @@
 %table.data
   %thead
     %tr
-      %td{:width => '5%'} ID
+      %td{:width => '10%'} ID
       %td{:width => '10%'} Device
       %td{:width => '40%'} Token
-      %td{:width => '25%'} Auth Key
+      %td{:width => '30%'} Auth Key
       %td{:width => '10%'} Usage
   %tbody
     - if @devices.empty?
@@ -62,3 +63,4 @@
         %td= device.token
         %td= device.auth_key.name
         %td= device.usage
+= paginate (@devices)
